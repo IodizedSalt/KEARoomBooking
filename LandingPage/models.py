@@ -12,3 +12,4 @@ class User(models.Model):
 
 class RegNum(models.Model):
     userNum = models.ForeignKey(User, on_delete=models.CASCADE)
+

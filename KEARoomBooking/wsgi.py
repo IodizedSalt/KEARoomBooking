@@ -1,4 +1,4 @@
-"""
+b"""
 WSGI config for KEARoomBooking project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
