@@ -8,6 +8,8 @@ class User(models.Model):
     emailField = models.CharField(max_length=30)
     nameField = models.CharField(max_length=20)
     passwordField = models.CharField(max_length=20)
+    def __str__(self):
+        return self.emailField
 
 
 class RegNum(models.Model):
