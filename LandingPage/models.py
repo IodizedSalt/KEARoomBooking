@@ -6,12 +6,13 @@ from django.db import models
 
 class User(models.Model):
     emailField = models.CharField(max_length=30)
-    nameField = models.CharField(max_length=20)
     passwordField = models.CharField(max_length=20)
+    firstNameField = models.CharField(max_length=20)
+    lastNameField = models.CharField(max_length=20)
+
     def __str__(self):
         return self.emailField
 
-
-class RegNum(models.Model):
-    userNum = models.ForeignKey(User, on_delete=models.CASCADE)
-
+#
+# class RegNum(models.Model):
+#     userNum = models.ForeignKey(User, on_delete=models.CASCADE)
