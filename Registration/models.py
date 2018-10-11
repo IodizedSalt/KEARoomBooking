@@ -12,7 +12,3 @@ class User(models.Model):
 
     def __str__(self):
         return self.emailField
-
-#
-# class RegNum(models.Model):
-#     userNum = models.ForeignKey(User, on_delete=models.CASCADE)

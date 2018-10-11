@@ -17,16 +17,19 @@ Including another URLconf
 # from django.urls import include, path
 #
 # urlpatterns = [
-#     path('', include('LandingPage.urls')),
+#     path('', include('Registration.urls')),
 #     path('admin/', admin.site.urls),
 # ]
 
 from django.urls import path, re_path
 from django.contrib import admin
-import LandingPage.views as app             # Ignore this error, it compiles
+import Registration.views as app             # Ignore this error, it compiles
+import Campus.views as apps
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
-    path(r'', app.AllUser.as_view()),
-    re_path(r'(?P<pk>\d+)', app.UserView.as_view()),
+    path(r'registration', app.AllUser.as_view()),
+    path(r'campus/', apps.AllCampus.as_view()),         #MAKE SURE YOU HAVE THE RIGHT CALL HERE (ALLCAMPUS VS CAMPUSVIEW)
+    re_path(r'(?P<pk>\d+)', app.UserView.as_view()),        #Figure out what this line does
+    re_path(r'(?P<pk>\d+)', apps.CampusView.as_view()),     #These lines are necessary orelse you get a typeError. try it out
 ]

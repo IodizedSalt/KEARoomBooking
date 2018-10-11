@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # 'LandingPage.apps.LandingpageConfig',
-    'LandingPage',
+    'Registration',
+    'Campus',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
