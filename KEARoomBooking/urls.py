@@ -13,13 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# from django.contrib import admin
-# from django.urls import include, path
-#
-# urlpatterns = [
-#     path('', include('Registration.urls')),
-#     path('admin/', admin.site.urls),
-# ]
 
 from django.urls import path, re_path
 from django.contrib import admin
@@ -29,7 +22,9 @@ import Campus.views as apps
 urlpatterns = [
     path(r'admin/', admin.site.urls),
     path(r'registration', app.AllUser.as_view()),
-    path(r'campus/', apps.AllCampus.as_view()),         #MAKE SURE YOU HAVE THE RIGHT CALL HERE (ALLCAMPUS VS CAMPUSVIEW)
+    path(r'campus/', apps.AllCampus.as_view()),             #MAKE SURE YOU HAVE THE RIGHT CALL HERE (ALLCAMPUS VS CAMPUSVIEW)
+    path(r'campus/room/', apps.AllRoom.as_view()),
     re_path(r'(?P<pk>\d+)', app.UserView.as_view()),        #Figure out what this line does
     re_path(r'(?P<pk>\d+)', apps.CampusView.as_view()),     #These lines are necessary orelse you get a typeError. try it out
+    re_path(r'(?P<pk>\d+)', apps.RoomView.as_view()),
 ]
