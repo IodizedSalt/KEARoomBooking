@@ -16,15 +16,23 @@ Including another URLconf
 
 from django.urls import path, re_path
 from django.contrib import admin
-import Registration.views as app             # Ignore this error, it compiles
-import Campus.views as apps
+import Registration.views as regApp             # Ignore this error, it compiles
+import Campus.views as campusApp
+import Room.views as roomApp
 
 urlpatterns = [
-    path(r'admin/', admin.site.urls),
-    path(r'registration', app.AllUser.as_view()),
-    path(r'campus/', apps.AllCampus.as_view()),             #MAKE SURE YOU HAVE THE RIGHT CALL HERE (ALLCAMPUS VS CAMPUSVIEW)
-    path(r'campus/room/', apps.AllRoom.as_view()),
-    re_path(r'(?P<pk>\d+)', app.UserView.as_view()),        #Figure out what this line does
-    re_path(r'(?P<pk>\d+)', apps.CampusView.as_view()),     #These lines are necessary orelse you get a typeError. try it out
-    re_path(r'(?P<pk>\d+)', apps.RoomView.as_view()),
+    path(r'admin/', admin.site.urls),                       #Admin Panel
+
+    path(r'registration', regApp.AllUser.as_view()),           #UserRegistration
+
+    path(r'campus/', campusApp.AllCampus.as_view()),             #Campus list
+
+    path(r'campus/room/', roomApp.AllRoom.as_view()),          #Rooms list per Campus
+    path(r'campus/room/details', roomApp.AllRoomDetails.as_view()),          #Room Details list per Room per campus
+
+    re_path(r'(?P<pk>\d+)', regApp.UserView.as_view()),        #Figure out what this line does
+    re_path(r'(?P<pk>\d+)', campusApp.CampusView.as_view()),
+
+    re_path(r'(?P<pk>\d+)', roomApp.RoomView.as_view()),
+    re_path(r'(?P<pk>\d+)', roomApp.RoomDetailsView.as_view()),
 ]

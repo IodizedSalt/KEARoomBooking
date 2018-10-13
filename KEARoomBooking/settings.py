@@ -26,6 +26,7 @@ SECRET_KEY = 'rpw%pby91+7wvr7n=a6pu6-eq-ea&zrkn3$!qvk+2(%gixr^i)'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -33,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'Registration',
     'Campus',
+    'Room',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

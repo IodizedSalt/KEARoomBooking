@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Campus, Room
+from .models import Campus
 
 
 class CampusSerializer(serializers.ModelSerializer):
@@ -8,9 +8,3 @@ class CampusSerializer(serializers.ModelSerializer):
         model = Campus
         fields = '__all__'
 
-
-class RoomSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Room
-        fields = '__all__'
