@@ -5,7 +5,7 @@ from django.db import models
 # Models are schemas/layout of the database
 
 class User(models.Model):
-    emailField = models.CharField(max_length=30)
+    emailField = models.CharField(max_length=30, unique=True)
     passwordField = models.CharField(max_length=20)
     firstNameField = models.CharField(max_length=20)
     lastNameField = models.CharField(max_length=20)

@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'Booking',
     'Registration',
     'Campus',
     'Room',
@@ -122,10 +123,14 @@ TIME_ZONE = 'Europe/Copenhagen'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 
+REST_FRAMEWORK = {
+
+    'DATETIME_FORMAT': "%d/%m/%Y %H:%M",
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/

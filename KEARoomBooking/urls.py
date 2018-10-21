@@ -19,6 +19,7 @@ from django.contrib import admin
 import Registration.views as regApp             # Ignore this error, it compiles
 import Campus.views as campusApp
 import Room.views as roomApp
+import Booking.views as bookingApp
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),                       #Admin Panel
@@ -30,9 +31,13 @@ urlpatterns = [
     path(r'campus/room/', roomApp.AllRoom.as_view()),          #Rooms list per Campus
     path(r'campus/room/details', roomApp.AllRoomDetails.as_view()),          #Room Details list per Room per campus
 
+    path(r'booking', bookingApp.AllBooking.as_view()),          #Room Details list per Room per campus
+
     re_path(r'(?P<pk>\d+)', regApp.UserView.as_view()),        #Figure out what this line does
     re_path(r'(?P<pk>\d+)', campusApp.CampusView.as_view()),
 
     re_path(r'(?P<pk>\d+)', roomApp.RoomView.as_view()),
     re_path(r'(?P<pk>\d+)', roomApp.RoomDetailsView.as_view()),
+
+    re_path(r'(?P<pk>\d+)', bookingApp.BookingView.as_view()),
 ]
