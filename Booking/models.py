@@ -23,5 +23,4 @@ class Booking(models.Model):
     endDate = models.DateTimeField(null=True, blank=True, default=datetime.now)
     emailID = models.ForeignKey('Registration.User', to_field='emailField', on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.roomID
+

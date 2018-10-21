@@ -46,9 +46,9 @@ class AllRoomDetails(ListAPIView):
 
 class RoomDetailsView(APIView):
 
-    def get(self, request, pk, format=None):
+    def get(self, request, dk, format=None):
         try:
-            roomDetails = Room.objects.get(pk=pk)
+            roomDetails = Room.objects.get(pk=dk)
             serializer = RoomDetailsSerializer(roomDetails)
             return Response(serializer.data)
         except:
