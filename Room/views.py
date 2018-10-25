@@ -46,10 +46,10 @@ class AllRoomDetails(ListAPIView):
 
 class RoomDetailsView(APIView):
 
-    def get(self, request, dk, format=None):
+    def get(self, request, pk, format=None):
         try:
-            roomDetails = Room.objects.get(pk=dk)
-            serializer = RoomDetailsSerializer(roomDetails)
-            return Response(serializer.data)
+            roomDetails = Room.objects.get(pk=pk)
+            rdSerializer = RoomDetailsSerializer(roomDetails)
+            return Response(rdSerializer.data)
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)

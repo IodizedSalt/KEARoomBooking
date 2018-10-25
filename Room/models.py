@@ -21,5 +21,8 @@ class RoomDetails(models.Model):
     whiteboard = models.BooleanField(default=False)
     projector = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name_plural = "Room Details"
+
     def __str__(self):
-        return self.roomDetailsID
+        return self.roomDetailsID_id
