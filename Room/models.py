@@ -25,4 +25,4 @@ class RoomDetails(models.Model):
         verbose_name_plural = "Room Details"
 
     def __str__(self):
-        return self.roomDetailsID_id
+        return self.roomDetailsID
