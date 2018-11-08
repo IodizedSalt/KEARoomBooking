@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Campus
 from .serializer import CampusSerializer
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 # Create your views here.
@@ -12,6 +13,8 @@ class AllCampus(ListAPIView):
 
     queryset = Campus.objects.all()
     serializer_class = CampusSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('campusName', )
 
     def post(self, request, format=None):
         serializer = CampusSerializer(data=request.data)

@@ -36,6 +36,7 @@ urlpatterns = [
     re_path(r'^booking/(?P<pk>\d+)', bookingApp.BookingView.as_view()),
 
     re_path(r'^registration/(?P<pk>\d+)', regApp.UserView.as_view()),        #Figure out what this line does
+    # re_path(r'registration/find$', regApp.UserView.as_view()),        #Figure out what this line does
     re_path(r'^campus/(?P<pk>\d+)', campusApp.CampusView.as_view()),
 
     re_path(r'^campus/room/(?P<pk>\d+)', roomApp.RoomView.as_view()),

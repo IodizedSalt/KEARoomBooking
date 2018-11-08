@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
@@ -9,6 +10,8 @@ class AllBooking(ListAPIView):
 
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('roomID', 'emailID')
 
     def post(self, request, format=None):
         serializer = BookingSerializer(data=request.data)

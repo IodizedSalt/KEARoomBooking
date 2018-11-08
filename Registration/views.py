@@ -4,6 +4,8 @@ from rest_framework import status
 from rest_framework.generics import ListAPIView
 from .models import User
 from .serializer import UserSerializer
+from django_filters.rest_framework import DjangoFilterBackend
+
 # Create your views here.
 
 
@@ -11,6 +13,8 @@ class AllUser(ListAPIView):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('firstNameField', 'emailField')
 
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)

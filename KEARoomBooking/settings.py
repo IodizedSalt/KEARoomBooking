@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'Registration',
     'Campus',
     'Room',
+    'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -130,6 +131,8 @@ USE_TZ = True
 REST_FRAMEWORK = {
 
     'DATETIME_FORMAT': "%d/%m/%Y %H:%M",
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+
 }
 
 # Static files (CSS, JavaScript, Images)

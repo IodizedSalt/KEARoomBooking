@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
@@ -11,6 +12,8 @@ class AllRoom(ListAPIView):
 
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('roomID', 'campus')
 
     def post(self, request, format=None):
         serializer = RoomSerializer(data=request.data)
@@ -35,7 +38,8 @@ class AllRoomDetails(ListAPIView):
 
     queryset = RoomDetails.objects.all()
     serializer_class = RoomDetailsSerializer
-
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('roomDetailsID',)
     def post(self, request, format=None):
         serializer = RoomDetailsSerializer(data=request.data)
         if serializer.is_valid():
