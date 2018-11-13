@@ -23,13 +23,19 @@ from .serializer import BookingSerializer, startDateSerializer
 #             return (datetime.datetime.min + obj).time().isoformat()
 #         else:
 #             return super(DateTimeEncoder, self).default(obj)
+
+
+
 # Create your views here.
 class AllBooking(ListAPIView):
 
+    # queryset = Booking.objects.all()
     queryset = Booking.objects.all()
+    # queryset.filter(roomID__booking__startDate__lte="2018-11-14 11:00", roomID__booking__endDate__gte="2018-11-14 15:00")
     serializer_class = BookingSerializer
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('roomID', 'emailID', 'startDate')
+    filter_fields = ('roomID', 'emailID', 'startDate', 'endDate')
+
 
 
 
@@ -57,9 +63,12 @@ class BookingView(APIView):
 
     def get(self, request, pk, format=None):
         try:
+            # booking = Booking.objects.get(pk=pk)
             booking = Booking.objects.get(pk=pk)
+            # booking.filter(roomID__booking__startDate__lte="2018-11-14 11:00",
+            #                 roomID__booking__endDate__gte="2018-11-14 15:00")
+
             serializer = BookingSerializer(booking)
-            print(datetime.now)
             return Response(serializer.data)
         except:
             return Response(status=status.HTTP_404_NOT_FOUND)
