@@ -8,8 +8,9 @@ from datetime import datetime
 
 class Booking(models.Model):
     roomID = models.ForeignKey('Room.Room', on_delete=models.CASCADE, to_field='roomID')
-    startDate = models.DateTimeField(null=True, blank=True, default=datetime.now)
-    endDate = models.DateTimeField(null=True, blank=True, default=datetime.now)
+    startDate = models.DateTimeField(null=True, blank=True)
+    endDate = models.DateTimeField(null=True, blank=True)
+    # endDate = models.DateTimeField(null=True, blank=True, default=datetime.now)
     emailID = models.ForeignKey('Registration.User', to_field='emailField', on_delete=models.CASCADE)
 
 

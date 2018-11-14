@@ -1,58 +1,29 @@
-import base64
-import datetime
-
-import json
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Booking
-from .serializer import BookingSerializer, startDateSerializer
-# from .serializer import BookingSerializer
-
-
-# class DateTimeEncoder(json.JSONEncoder):
-#     def default(self, obj):
-#         if isinstance(obj, datetime.datetime):
-#             return obj.isoformat()
-#         elif isinstance(obj, datetime.date):
-#             return obj.isoformat()
-#         elif isinstance(obj, datetime.timedelta):
-#             return (datetime.datetime.min + obj).time().isoformat()
-#         else:
-#             return super(DateTimeEncoder, self).default(obj)
-
+from .serializer import BookingSerializer
 
 
 # Create your views here.
 class AllBooking(ListAPIView):
-
-    # queryset = Booking.objects.all()
-    queryset = Booking.objects.all()
-    # queryset.filter(roomID__booking__startDate__lte="2018-11-14 11:00", roomID__booking__endDate__gte="2018-11-14 15:00")
     serializer_class = BookingSerializer
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('roomID', 'emailID', 'startDate', 'endDate')
+    filter_fields = ('roomID', 'emailID', 'endDate')
+
+    def get_queryset(self):
+        booking = self.request.query_params.getlist('startDate')
 
 
+        return Booking.objects.exclude(startDate__in=booking)
+        # return Booking.objects.all()
 
-
-
-    def post(self, request, format=None):           #todo (3 logics in endpoint doc)
+    def post(self, request, format=None):  # todo (3 logics in endpoint doc)
         serializer = BookingSerializer(data=request.data)
 
-        # cereal = startDateSerializer(data=request.data)
-        # poop = cereal.to_representation(request.data)
-        # encoded = base64.urlsafe_b64encode(poop.encode())
-        # print(encoded)
-        #
-        # decoded = base64.urlsafe_b64decode(encoded)
-        # print(decoded)
-        #
-        # val = DateTimeEncoder().encode(poop)
-        # print(val)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -60,18 +31,22 @@ class AllBooking(ListAPIView):
 
 
 class BookingView(APIView):
-
-    def get(self, request, pk, format=None):
-        try:
-            # booking = Booking.objects.get(pk=pk)
-            booking = Booking.objects.get(pk=pk)
-            # booking.filter(roomID__booking__startDate__lte="2018-11-14 11:00",
-            #                 roomID__booking__endDate__gte="2018-11-14 15:00")
-
-            serializer = BookingSerializer(booking)
-            return Response(serializer.data)
-        except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+    # def get(self, request, pk, format=None):
+    #
+    #     booking = Booking.objects.get(startDate=pk)
+    #     return Booking.objects.exclude(startDate=booking)
+    #
+    #     # try:
+    #     #     booking = Booking.objects.get(pk=pk)
+    #     #     # booking = Booking.objects.get(pk=self.kwargs['startDate'])
+    #     #     # booking.filter(roomID__booking__startDate__lte="2018-11-14 11:00",
+    #     #     #                 roomID__booking__endDate__gte="2018-11-14 15:00")
+    #     #     # booking = Booking.objects.exclude(pk='startDate')
+    #     #     serializer = BookingSerializer(booking)
+    #     #     return Response(serializer.data)
+    #     # except:
+    #     #     # return Response(status=status.HTTP_404_NOT_FOUND)
+    #     #     print(status)
 
     def delete(self, request, pk, format=None):
         booking = Booking.objects.get(pk=pk)
