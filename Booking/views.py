@@ -1,9 +1,12 @@
+import datetime
+from datetime import date
+
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.generics import ListAPIView, ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from .filter import DateFilter
 from .models import Booking
 from .serializer import BookingSerializer
 
@@ -12,15 +15,19 @@ from .serializer import BookingSerializer
 class AllBooking(ListAPIView):
     serializer_class = BookingSerializer
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('roomID', 'emailID', 'endDate')
+    filter_fields = ('roomID', 'emailID')
 
     def get_queryset(self):
-        booking = self.request.query_params.getlist('startDate')
+        # start = self.request.query_params.getlist('startDate')
+        # end = self.request.query_params.getlist('endDate')
+        # print(start)  #todo ['2018-11-15 10:00']
+        # print(end)  #todo ['2018-11-15 11:00']
 
-
-        return Booking.objects.exclude(startDate__in=booking)
-        # return Booking.objects.all()
-
+        # year,month,day = booking.split('-')
+        # print("year ", year, "month", month, "day", day)
+        # print(Booking.objects.filter(startDate__gt=datetime.datetime(2018, 11, 14, 10, 0)).filter(endDate__lt=datetime.datetime(2018, 11, 14, 11, 0)))
+        return Booking.objects.exclude(startDate__gt=datetime.datetime(2018, 11, 15, 10, 0)).exclude(endDate__lt=datetime.datetime(2018, 11, 15, 10, 40))  #todo, replace static values with dynamic values and ensure minutes work
+        # return Booking.objects.filter(startDate__gt=datetime.datetime(2018, 11, 14, 10, 0))
     def post(self, request, format=None):  # todo (3 logics in endpoint doc)
         serializer = BookingSerializer(data=request.data)
 

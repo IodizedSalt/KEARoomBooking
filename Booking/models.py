@@ -14,3 +14,5 @@ class Booking(models.Model):
     emailID = models.ForeignKey('Registration.User', to_field='emailField', on_delete=models.CASCADE)
 
 
+
+
