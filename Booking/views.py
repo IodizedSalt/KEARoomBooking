@@ -23,12 +23,10 @@ class AllBooking(ListAPIView):
 
             start = self.request.query_params.getlist('startDate')
             end = self.request.query_params.getlist('endDate')
-            # print("original ", start)  #todo ['2018-11-15 10:00']
-            # print(end)  #todo ['2018-11-15 11:00']
 
             stringStart = "".join(start)
             stringStart1 = stringStart.split(' ')
-            ymd = stringStart1[0]
+            ymd = stringStart1[0]                           #Todo, refine all of these variables, 
             hm = stringStart1[1]
 
             startYear, startMonth, startDay= ymd.split('-')
@@ -41,13 +39,8 @@ class AllBooking(ListAPIView):
             startHour = hm1[0]
             startHour = int(startHour)
             startMinute = hm1[1]
-            startMinute = int(startMinute
-                              )
-            # print("Start : ", "year" ,startYear , "month ",startMonth, "day ",startDay, "hour ",startHour, "min ",startMinute)
-            # print(startYear ,startMonth,startDay,startHour,startMinute)
+            startMinute = int(startMinute)
 
-            # endYear,endMonth,endDay = booking.split('-')
-            # endHour, endMinute = None
             stringEnd = "".join(end)
             stringEnd1 = stringEnd.split(' ')
             ymd1 = stringEnd1[0]
@@ -65,14 +58,7 @@ class AllBooking(ListAPIView):
             endMinute = hm3[1]
             endMinute = int(endMinute)
 
-            # print("End : ", "year ",endYear , "month ",endMonth, "day ",endDay, "hour ",endHour, "min ",endMinute)
-            # print(endYear,endMonth,endDay,endHour,endMinute)
-            # print(Booking.objects.filter(startDate__gt=datetime.datetime(2018, 11, 14, 10, 0)).filter(endDate__lt=datetime.datetime(2018, 11, 14, 11, 0)))
-            # return Booking.objects.filter(startDate__gt=datetime.datetime(2018, 11, 15, 10, 0)).filter(endDate__lt=datetime.datetime(2018, 11, 15, 10,40))
-            yes = datetime.datetime(startYear, startMonth, startDay, startHour, startMinute)
-            no = datetime.datetime(endYear, endMonth, endDay, endHour, endMinute)
-            return Booking.objects.filter(endDate__range=(yes, no))  #todo FINISH TESTING THIS
-            # return Booking.objects.filter(startDate__gte=datetime.datetime(startYear, startMonth, startDay, startHour, startMinute)).filter(endDate__lte=datetime.datetime(endYear, endMonth, endDay, endHour, endMinute))  #todo, fix ranging issue with dates
+            return Booking.objects.filter(endDate__gt=datetime.datetime(startYear, startMonth, startDay, startHour, startMinute)).filter(startDate__lt=datetime.datetime(endYear, endMonth, endDay, endHour, endMinute))  #todo, fix ranging issue with dates
         except:
             return Booking.objects.all()
     def post(self, request, format=None):  # todo (3 logics in endpoint doc)
