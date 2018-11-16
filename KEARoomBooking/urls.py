@@ -25,6 +25,7 @@ urlpatterns = [
     path(r'admin/', admin.site.urls),                       #Admin Panel
 
     path(r'booking', bookingApp.AllBooking.as_view()),  # Room Details list per Room per campus
+    path('booking/cancel', bookingApp.BookingView.as_view()),        #Get bookings
 
     path(r'registration', regApp.AllUser.as_view()),           #UserRegistration
 
@@ -32,6 +33,8 @@ urlpatterns = [
 
     path(r'campus/room', roomApp.AllRoom.as_view()),          #Rooms list per Campus
     path(r'campus/room/details', roomApp.AllRoomDetails.as_view()),          #Room Details list per Room per campus
+
+    re_path('booking/cancel/(?P<pk>\w+)', bookingApp.BookingView.as_view()),
 
     # re_path(r'^booking/(?P<pk>\d+)', bookingApp.BookingView.as_view()),
     re_path(r'^booking/(?P<pk>\d+)', bookingApp.AllBooking.as_view()),
