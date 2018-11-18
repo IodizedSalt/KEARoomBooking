@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from django.contrib import admin
 import Registration.views as regApp             # Ignore this error, it compiles
 import Campus.views as campusApp
@@ -27,8 +27,8 @@ urlpatterns = [
     path(r'booking', bookingApp.AllBooking.as_view()),  # Room Details list per Room per campus
     path('booking/cancel', bookingApp.BookingView.as_view()),        #Get bookings
 
-    path(r'registration', regApp.AllUser.as_view()),           #UserRegistration
-    # path(r'login', regApp..as_view()),           #UserRegistration
+    path(r'registration', include('rest_auth.registration.urls')),         #UserRegistration
+    path(r'', include('rest_auth.urls')),           #UserRegistration
 
     path(r'campus', campusApp.AllCampus.as_view()),             #Campus list
 
