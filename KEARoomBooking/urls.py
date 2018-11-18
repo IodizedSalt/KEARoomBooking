@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.urls import path, re_path, include
 from django.contrib import admin
-import Registration.views as regApp             # Ignore this error, it compiles
+# import Registration.views as regApp             # Ignore this error, it compiles
 import Campus.views as campusApp
 import Room.views as roomApp
 import Booking.views as bookingApp
@@ -40,7 +40,7 @@ urlpatterns = [
     # re_path(r'^booking/(?P<pk>\d+)', bookingApp.BookingView.as_view()),
     re_path(r'^booking/(?P<pk>\d+)', bookingApp.AllBooking.as_view()),
 
-    re_path(r'^registration/(?P<pk>\d+)', regApp.UserView.as_view()),
+    # re_path(r'^registration/(?P<pk>\d+)', regApp.UserView.as_view()),
     # re_path(r'^login/(?P<pk>\d+)', regApp..as_view()),
     re_path(r'^campus/(?P<pk>\d+)', campusApp.CampusView.as_view()),
 

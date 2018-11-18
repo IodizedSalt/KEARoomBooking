@@ -1,6 +1,7 @@
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -38,12 +39,19 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'django.contrib.sites',
     'allauth',
-    'allauth.account'
+    'allauth.account',
+    'allauth.socialaccount'
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+ACCOUNT_USERNAME_REQUIRED = False
+# AUTH_USER_MODEL = User.email
 SITE_ID = 1
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'KEARoomBooking.serializer.RegisterSerializer'
+
+}
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
