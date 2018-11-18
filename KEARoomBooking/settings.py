@@ -23,6 +23,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'Booking',
     'Registration',
+    # 'Registration.UserConfig',
     'Campus',
     'Room',
     'django_filters',
@@ -45,7 +46,7 @@ INSTALLED_APPS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_USERNAME_REQUIRED = False
-# AUTH_USER_MODEL = User.email
+AUTH_USER_MODEL = 'Registration.User'
 SITE_ID = 1
 
 REST_AUTH_REGISTER_SERIALIZERS = {
@@ -107,8 +108,10 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
             'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-            }
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                "init_command": "SET foreign_key_checks = 0;"
+
+}
     }
 }
 
