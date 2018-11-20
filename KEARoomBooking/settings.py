@@ -44,12 +44,17 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount'
 ]
-AUTHENTICATION_BACKENDS = (
-    ('django.contrib.auth.backends.ModelBackend'),
-)
+# AUTHENTICATION_BACKENDS = (                           
+#     ('django.contrib.auth.backends.ModelBackend'),
+# )
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-ACCOUNT_USERNAME_REQUIRED = False
+
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None              #todo, look into this breaking registration
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_USERNAME_REQUIRED = False
+# ACCOUNT_AUTHENTICATION_METHOD = 'email address'
+
 AUTH_USER_MODEL = 'Registration.User'
 SITE_ID = 1
 
@@ -156,7 +161,10 @@ USE_TZ = False
 REST_FRAMEWORK = {
 
     'DATETIME_FORMAT': "%d/%m/%Y %H:%M",
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
 
 }
 

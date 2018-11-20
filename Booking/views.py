@@ -64,7 +64,28 @@ class AllBooking(ListAPIView):
         serializer = BookingSerializer(data=request.data)
 
         if serializer.is_valid():
-            serializer.save()
+            room = serializer.validated_data['roomID']
+            start = serializer.validated_data['startDate']
+            end = serializer.validated_data['endDate']
+
+            if room != '':
+                bookingCheck = Booking.objects.filter(roomID=room, endDate__gt=start, startDate__lt=end)
+                if not bookingCheck:
+                    serializer.save()
+                elif serializer.is_valid():
+                    bookingDuplicate = bookingCheck[0]
+                    serializer = BookingSerializer(bookingDuplicate)
+                    # return Response(serializer.data)
+                    return Response("error, this room is already booked for this time") #todo make a proper response
+            else:
+                return Response(serializer.errors,
+                                status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

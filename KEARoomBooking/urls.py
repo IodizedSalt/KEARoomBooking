@@ -13,15 +13,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
+from django.conf.urls import url
 from django.urls import path, re_path, include
 from django.contrib import admin
 # import Registration.views as regApp             # Ignore this error, it compiles
 import Campus.views as campusApp
 import Room.views as roomApp
 import Booking.views as bookingApp
+from rest_framework.authtoken import views
+
 
 urlpatterns = [
+
     path(r'admin/', admin.site.urls),                       #Admin Panel
 
     path(r'booking', bookingApp.AllBooking.as_view()),  # Room Details list per Room per campus
