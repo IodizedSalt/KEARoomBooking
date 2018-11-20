@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import Booking
 from .serializer import BookingSerializer
@@ -67,16 +68,26 @@ class AllBooking(ListAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class BookingView(ListAPIView):
+    # def get(self, request, *args, **kwargs):
+    #     username = self.kwargs.get('username')
+    #     print(username)
+    #
+    #     # use this if username is being sent as a query parameter
+    #     queryparam = self.request.query_params.get('username')
+    #     print(queryparam)
+
+class BookingView(APIView):
     serializer_class = BookingSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('roomID', 'emailID', 'bookingID')
 
-    def get_queryset(self):
-        try:
-            return Booking.objects.all()
-        except:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+    def get(self, request, *args, **kwargs):
+        username = self.kwargs.get('username')
+        print(username)
+
+        # use this if username is being sent as a query parameter
+        queryparam = self.request.query_params.get('username')
+        print(queryparam)
 
     def delete(self, request, format=None):
         email = self.request.query_params.get('emailID')

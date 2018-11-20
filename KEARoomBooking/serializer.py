@@ -36,7 +36,7 @@ class RegisterSerializer(serializers.Serializer):
         if allauth_settings.UNIQUE_EMAIL:
             if email and email_address_exists(email):
                 raise serializers.ValidationError(
-                    _("A user is already registered with this e-mail address."))
+                    ("A user is already registered with this e-mail address."))
         return email
 
     def validate_password1(self, password):
@@ -60,10 +60,13 @@ class RegisterSerializer(serializers.Serializer):
         }
 
     def save(self, request):
-        adapter = get_adapter()
-        user = adapter.new_user(request)
-        self.cleaned_data = self.get_cleaned_data()
-        adapter.save_user(request, user, self)
-        self.custom_signup(request, user)
-        setup_user_email(request, user, [])
-        return user
+        try:
+            adapter = get_adapter()
+            user = adapter.new_user(request)
+            self.cleaned_data = self.get_cleaned_data()
+            adapter.save_user(request, user, self)
+            self.custom_signup(request, user)
+            setup_user_email(request, user, [])
+            return user
+        except Exception as e:
+            print(e)

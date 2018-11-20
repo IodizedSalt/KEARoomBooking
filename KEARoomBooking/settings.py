@@ -13,7 +13,8 @@ SECRET_KEY = 'rpw%pby91+7wvr7n=a6pu6-eq-ea&zrkn3$!qvk+2(%gixr^i)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+SESSION_COOKIE_SECURE = False  #ENABLE TO TRUE ON PRODUCTION
+CSRF_COOKIE_SECURE = False
 ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = ['*']
 
@@ -43,6 +44,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount'
 ]
+AUTHENTICATION_BACKENDS = (
+    ('django.contrib.auth.backends.ModelBackend'),
+)
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_USERNAME_REQUIRED = False
@@ -108,8 +112,9 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
             'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-                "init_command": "SET foreign_key_checks = 0;"
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES',\
+                                                foreign_key_checks = 0"
+                # "init_command": "SET foreign_key_checks = 0;"
 
 }
     }

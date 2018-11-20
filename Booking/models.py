@@ -17,7 +17,8 @@ class Booking(models.Model):
     bookingID = models.AutoField(primary_key=True)
 
     def __str__(self):
-        return self.bookingID
+        return 'Booking: {} {} {} {} {} '.format(self.roomID, self.startDate, self.endDate, self.emailID, self.bookingID)
+
 
 
 
