@@ -24,7 +24,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'Booking',
     'Registration',
-    # 'Registration.UserConfig',
     'Campus',
     'Room',
     'django_filters',
@@ -44,16 +43,17 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount'
 ]
-# AUTHENTICATION_BACKENDS = (                           
-#     ('django.contrib.auth.backends.ModelBackend'),
-# )
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend"
+)
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# ACCOUNT_USER_MODEL_USERNAME_FIELD = None              #todo, look into this breaking registration
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_USERNAME_REQUIRED = False
-# ACCOUNT_AUTHENTICATION_METHOD = 'email address'
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'                  #todo, look into this breaking registration
 
 AUTH_USER_MODEL = 'Registration.User'
 SITE_ID = 1
