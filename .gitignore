@@ -1,5 +1,5 @@
 venv/*
-#Registration/migrations
-#Booking/migrations
-#Campus/migrations
-#Room/migrations
+Registration/migrations
+Booking/migrations
+Campus/migrations
+Room/migrations
