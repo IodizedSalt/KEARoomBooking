@@ -21,6 +21,8 @@ import Campus.views as campusApp
 import Room.views as roomApp
 import Booking.views as bookingApp
 from rest_framework.authtoken import views
+from rest_framework.authtoken.views import ObtainAuthToken
+
 
 
 urlpatterns = [
@@ -32,6 +34,7 @@ urlpatterns = [
 
     path(r'registration', include('rest_auth.registration.urls')),         #UserRegistration
     path(r'', include('rest_auth.urls')),           #UserRegistration
+    url(r'^auth/', ObtainAuthToken.as_view()),
 
     path(r'campus', campusApp.AllCampus.as_view()),             #Campus list
 

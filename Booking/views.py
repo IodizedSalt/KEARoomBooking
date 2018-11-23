@@ -5,6 +5,10 @@ from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+
+
 
 from .models import Booking
 from .serializer import BookingSerializer
@@ -15,6 +19,8 @@ class AllBooking(ListAPIView):
     serializer_class = BookingSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('roomID', 'emailID', 'bookingID')
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):              #Gets all bookings/rooms during timeframe specified by booking?startDate=YYYY-MM-DD HH:MM&endDate=YYYY-MM-DD HH:MM
         try:
@@ -117,4 +123,3 @@ class BookingView(APIView):
         booking = Booking.objects.filter(roomID=room, emailID=email, bookingID=id)
         booking.delete()
         return Response(status=status.HTTP_200_OK)
-

@@ -1,1 +1,10 @@
 ./venv/*
+Registration/migrations
+Booking/migrations
+Campus/migrations
+Room/migrations
+Registration/__pycache__
+Booking/__pycache__
+Campus/__pycache__
+Room/__pycache__
+KEARoomBooking/__pycache__

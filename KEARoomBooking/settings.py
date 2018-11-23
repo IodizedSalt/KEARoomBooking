@@ -63,6 +63,12 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
+
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:4200/',
@@ -111,17 +117,14 @@ WSGI_APPLICATION = 'KEARoomBooking.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db.mysql',
+        'NAME': 'keamysql',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': '4223root',
         'HOST': 'localhost',
         'PORT': '3306',
             'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES',\
-                                                foreign_key_checks = 0"
-                # "init_command": "SET foreign_key_checks = 0;"
-
-}
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+            }
     }
 }
 
