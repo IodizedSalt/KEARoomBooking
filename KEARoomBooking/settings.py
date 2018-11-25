@@ -4,7 +4,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -13,7 +12,7 @@ SECRET_KEY = 'rpw%pby91+7wvr7n=a6pu6-eq-ea&zrkn3$!qvk+2(%gixr^i)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-SESSION_COOKIE_SECURE = False  #ENABLE TO TRUE ON PRODUCTION
+SESSION_COOKIE_SECURE = False  # ENABLE TO TRUE ON PRODUCTION
 CSRF_COOKIE_SECURE = False
 ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = ['*']
@@ -53,7 +52,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'                  #todo, look into this breaking registration
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  # todo, look into this breaking registration
 
 AUTH_USER_MODEL = 'Registration.User'
 SITE_ID = 1
@@ -110,24 +109,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'KEARoomBooking.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'keamysql',
+        'NAME': 'db.mysql',
         'USER': 'root',
-        'PASSWORD': '4223root',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
-            'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-            }
+        'OPTIONS': {
+            'init_command':
+                            "SET sql_mode='STRICT_TRANS_TABLES',\
+                            foreign_key_checks = 0"
+        }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -146,7 +145,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/

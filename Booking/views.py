@@ -19,8 +19,8 @@ class AllBooking(ListAPIView):
     serializer_class = BookingSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('roomID', 'emailID', 'bookingID')
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):              #Gets all bookings/rooms during timeframe specified by booking?startDate=YYYY-MM-DD HH:MM&endDate=YYYY-MM-DD HH:MM
         try:
@@ -30,7 +30,7 @@ class AllBooking(ListAPIView):
 
             stringStart = "".join(start)
             stringStart1 = stringStart.split(' ')
-            ymd = stringStart1[0]                           #Todo, refine all of these variables,
+            ymd = stringStart1[0]
             hm = stringStart1[1]
 
             startYear, startMonth, startDay= ymd.split('-')
@@ -66,60 +66,64 @@ class AllBooking(ListAPIView):
         except:
             return Booking.objects.all()
 
-    def post(self, request, format=None):  # todo (3 logics in endpoint doc)
+    def post(self, request, format=None):
         serializer = BookingSerializer(data=request.data)
-
         if serializer.is_valid():
             room = serializer.validated_data['roomID']
             start = serializer.validated_data['startDate']
             end = serializer.validated_data['endDate']
+            email = serializer.validated_data['emailID']
 
             if room != '':
-                bookingCheck = Booking.objects.filter(roomID=room, endDate__gt=start, startDate__lt=end)
-                if not bookingCheck:
+                sameRoomTimeFrame = Booking.objects.filter(roomID=room, endDate__gt=start, startDate__lt=end)  #Prevent booking for same room at same time
+                sameUserTimeFrame = Booking.objects.filter(endDate__gt=start, startDate__lt=end, emailID=email) #Prevent user from booking the same time period on same day  in different rooms
+
+                if not sameUserTimeFrame and not sameRoomTimeFrame:
                     serializer.save()
-                elif serializer.is_valid():
-                    bookingDuplicate = bookingCheck[0]
-                    serializer = BookingSerializer(bookingDuplicate)
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                elif serializer.is_valid() and sameRoomTimeFrame:
+                    # bookingDuplicate = bookingCheck[0]
+                    # serializer = BookingSerializer(bookingDuplicate)
                     # return Response(serializer.data)
-                    return Response("error, this room is already booked for this time") #todo make a proper response
+                    return Response("error, this room is already booked for this time")
+                elif serializer.is_valid() and sameUserTimeFrame:
+                    return Response("Error, you cannot make another booking during a time period in which you already have one.")
             else:
-                return Response(serializer.errors,
-                                status=status.HTTP_400_BAD_REQUEST)
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-
-
-
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # def get(self, request, *args, **kwargs):
-    #     username = self.kwargs.get('username')
-    #     print(username)
-    #
-    #     # use this if username is being sent as a query parameter
-    #     queryparam = self.request.query_params.get('username')
-    #     print(queryparam)
 
 class BookingView(APIView):
     serializer_class = BookingSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('roomID', 'emailID', 'bookingID')
 
-    def get(self, request, *args, **kwargs):
-        username = self.kwargs.get('username')
-        print(username)
 
-        # use this if username is being sent as a query parameter
-        queryparam = self.request.query_params.get('username')
-        print(queryparam)
+    def get(self, request, *args, **kwargs):
+        email = self.request.query_params.get('emailID')
+        id = self.request.query_params.get('bookingID')
+        booking = Booking.objects.get(bookingID=id, emailID=email)
+
+        serializer = BookingSerializer(booking)
+        return Response(serializer.data)
 
     def delete(self, request, format=None):
-        email = self.request.query_params.get('emailID')
-        room = self.request.query_params.get('roomID')
         id = self.request.query_params.get('bookingID')
-        booking = Booking.objects.filter(roomID=room, emailID=email, bookingID=id)
+        booking = Booking.objects.filter(bookingID=id)
         booking.delete()
         return Response(status=status.HTTP_200_OK)
+
+class UserBookingPageView(APIView):
+    serializer_class = BookingSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('emailID')
+
+
+    def get(self, request, *args, **kwargs):
+        email = self.request.query_params.get('emailID')
+        booking = Booking.objects.filter(emailID=email)
+
+        serializer = BookingSerializer(booking, many=True)
+        return Response(serializer.data)

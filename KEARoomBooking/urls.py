@@ -29,11 +29,12 @@ urlpatterns = [
 
     path(r'admin/', admin.site.urls),                       #Admin Panel
 
-    path(r'booking', bookingApp.AllBooking.as_view()),  # Room Details list per Room per campus
-    path('booking/cancel', bookingApp.BookingView.as_view()),        #Get bookings
+    path(r'booking', bookingApp.AllBooking.as_view()),              # Bookings
+    path('booking/cancel', bookingApp.BookingView.as_view()),        #Get booking by booking ID and delete
+    path('booking/profile', bookingApp.UserBookingPageView.as_view()),        #Get bookings by emailID
 
     path(r'registration', include('rest_auth.registration.urls')),         #UserRegistration
-    path(r'', include('rest_auth.urls')),           #UserRegistration
+    path(r'', include('rest_auth.urls')),                                   #UserRegistration
     url(r'^auth/', ObtainAuthToken.as_view()),
 
     path(r'campus', campusApp.AllCampus.as_view()),             #Campus list
@@ -41,7 +42,7 @@ urlpatterns = [
     path(r'campus/room', roomApp.AllRoom.as_view()),          #Rooms list per Campus
     path(r'campus/room/details', roomApp.AllRoomDetails.as_view()),          #Room Details list per Room per campus
 
-    re_path('booking/cancel/(?P<pk>\w+)', bookingApp.BookingView.as_view()),
+    # re_path('booking/cancel/(?P<pk>\w+)', bookingApp.BookingView.as_view()),
 
     # re_path(r'^booking/(?P<pk>\d+)', bookingApp.BookingView.as_view()),
     re_path(r'^booking/(?P<pk>\d+)', bookingApp.AllBooking.as_view()),

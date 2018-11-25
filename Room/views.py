@@ -34,6 +34,13 @@ class RoomView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
 
+
+
+###################ROOM DETAILS######################################
+
+
+
+
 class AllRoomDetails(ListAPIView):
 
     queryset = RoomDetails.objects.all()
