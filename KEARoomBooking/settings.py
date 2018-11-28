@@ -115,16 +115,14 @@ WSGI_APPLICATION = 'KEARoomBooking.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db.mysql',
+        'NAME': 'keamysql',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': '4223root',
         'HOST': 'localhost',
         'PORT': '3306',
-        'OPTIONS': {
-            'init_command':
-                            "SET sql_mode='STRICT_TRANS_TABLES',\
-                            foreign_key_checks = 0"
-        }
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+            }
     }
 }
 
