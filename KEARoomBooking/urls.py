@@ -54,4 +54,10 @@ urlpatterns = [
     re_path(r'^campus/room/(?P<pk>\d+)', roomApp.RoomView.as_view()),
     re_path(r'^campus/room/details/(?P<pk>\w+)', roomApp.RoomDetailsView.as_view()),
 
+    url(
+        r'^booking/$',
+        bookingApp.getBookings,
+        name='getBookings'
+    )
+
 ]

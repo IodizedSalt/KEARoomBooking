@@ -2,7 +2,8 @@ import datetime
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.generics import ListAPIView
+from rest_framework.decorators import api_view
+from rest_framework.generics import ListAPIView, ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -15,12 +16,19 @@ from .serializer import BookingSerializer
 
 
 # Create your views here.
-class AllBooking(ListAPIView):
+class AllBooking(APIView):
     serializer_class = BookingSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('roomID', 'emailID', 'bookingID')
     # authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+
+        booking = Booking.objects.all()
+
+        serializer = BookingSerializer(booking, many=True)
+        return Response(serializer.data)
 
     def get_queryset(self):              #Gets all bookings/rooms during timeframe specified by booking?startDate=YYYY-MM-DD HH:MM&endDate=YYYY-MM-DD HH:MM
         try:
@@ -65,7 +73,6 @@ class AllBooking(ListAPIView):
             return Booking.objects.filter(endDate__gt=datetime.datetime(startYear, startMonth, startDay, startHour, startMinute)).filter(startDate__lt=datetime.datetime(endYear, endMonth, endDay, endHour, endMinute))  #todo, fix ranging issue with dates
         except:
             return Booking.objects.all()
-
     def post(self, request, format=None):
         serializer = BookingSerializer(data=request.data)
         if serializer.is_valid():
@@ -127,3 +134,23 @@ class UserBookingPageView(APIView):
 
         serializer = BookingSerializer(booking, many=True)
         return Response(serializer.data)
+
+
+@api_view(['GET', 'POST'])
+def getBookings(request):
+    if request.method == 'GET':
+        booking = Booking.objects.all()
+        serializer = BookingSerializer(booking, many=True)
+        return Response(serializer.data)
+    if request.method == 'POST':
+        data = {
+            'roomID': request.data.get('roomID'),
+            'startDate': request.data.get('startDate'),
+            'endDate': request.data.get('endDate'),
+            'emailID': request.data.get('emailID')
+        }
+        serializer = BookingSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
