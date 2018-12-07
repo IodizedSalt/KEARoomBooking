@@ -24,8 +24,9 @@ class AllBooking(APIView):
     # permission_classes = (IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
+        email = self.request.query_params.get('emailID')
 
-        booking = Booking.objects.all()
+        booking = Booking.objects.filter(emailID=email)
 
         serializer = BookingSerializer(booking, many=True)
         return Response(serializer.data)
