@@ -16,20 +16,13 @@ from .serializer import BookingSerializer
 
 
 # Create your views here.
-class AllBooking(APIView):
+class AllBooking(ListAPIView):              #Used to get all bookings, get bookings by Email, and get bookings by startDate. Also posts bookings
     serializer_class = BookingSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('roomID', 'emailID', 'bookingID')
     # authentication_classes = (TokenAuthentication,)
     # permission_classes = (IsAuthenticated,)
 
-    def get(self, request, *args, **kwargs):
-        email = self.request.query_params.get('emailID')
-
-        booking = Booking.objects.filter(emailID=email)
-
-        serializer = BookingSerializer(booking, many=True)
-        return Response(serializer.data)
 
     def get_queryset(self):              #Gets all bookings/rooms during timeframe specified by booking?startDate=YYYY-MM-DD HH:MM&endDate=YYYY-MM-DD HH:MM
         try:
@@ -70,8 +63,7 @@ class AllBooking(APIView):
             endHour = int(endHour)
             endMinute = hm3[1]
             endMinute = int(endMinute)
-
-            return Booking.objects.filter(endDate__gt=datetime.datetime(startYear, startMonth, startDay, startHour, startMinute)).filter(startDate__lt=datetime.datetime(endYear, endMonth, endDay, endHour, endMinute))  #todo, fix ranging issue with dates
+            return Booking.objects.filter(endDate__gt=datetime.datetime(startYear, startMonth, startDay, startHour, startMinute)).filter(startDate__lt=datetime.datetime(endYear, endMonth, endDay, endHour, endMinute))
         except:
             return Booking.objects.all()
     def post(self, request, format=None):

@@ -45,7 +45,7 @@ urlpatterns = [
     # re_path('booking/cancel/(?P<pk>\w+)', bookingApp.BookingView.as_view()),
 
     # re_path(r'^booking/(?P<pk>\d+)', bookingApp.BookingView.as_view()),
-    re_path(r'^booking/(?P<pk>\d+)', bookingApp.AllBooking.as_view()),
+    # re_path(r'^booking/(?P<pk>\d+)', bookingApp.AllBooking.as_view()),
 
     # re_path(r'^registration/(?P<pk>\d+)', regApp.UserView.as_view()),
     # re_path(r'^login/(?P<pk>\d+)', regApp..as_view()),
