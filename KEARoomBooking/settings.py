@@ -62,6 +62,10 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 
 }
 
+REST_AUTH_SERIALIZERS = {
+    'TOKEN_SERIALIZER': 'KEARoomBooking.serializer.TokenSerializer',
+}
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
