@@ -14,9 +14,9 @@ SECRET_KEY = 'rpw%pby91+7wvr7n=a6pu6-eq-ea&zrkn3$!qvk+2(%gixr^i)'
 DEBUG = True
 SESSION_COOKIE_SECURE = False  # ENABLE TO TRUE ON PRODUCTION
 CSRF_COOKIE_SECURE = False
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ['*']
 
+
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
