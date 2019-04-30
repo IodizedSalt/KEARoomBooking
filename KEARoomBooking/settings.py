@@ -12,10 +12,10 @@ SECRET_KEY = 'rpw%pby91+7wvr7n=a6pu6-eq-ea&zrkn3$!qvk+2(%gixr^i)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-SESSION_COOKIE_SECURE = False  # ENABLE TO TRUE ON PRODUCTION
+SESSION_COOKIE_SECURE = True  # ENABLE TO TRUE ON PRODUCTION
 CSRF_COOKIE_SECURE = False
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -52,7 +52,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'  # todo, look into this breaking registration
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
 AUTH_USER_MODEL = 'Registration.User'
 SITE_ID = 1
@@ -71,6 +71,8 @@ REST_FRAMEWORK = {
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:4200/',
+    'localhost:8000',
+
 )
 CORS_ORIGIN_REGEX_WHITELIST = (
     'http://localhost:4200/',
