@@ -1,4 +1,4 @@
-./venv/*
+venv/*
 Registration/migrations
 Booking/migrations
 Campus/migrations
@@ -8,3 +8,5 @@ Booking/__pycache__
 Campus/__pycache__
 Room/__pycache__
 KEARoomBooking/__pycache__
+.idea/
+venv/

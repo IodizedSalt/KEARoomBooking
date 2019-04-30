@@ -15,6 +15,14 @@ except ImportError:
 from rest_framework import serializers
 from requests.exceptions import HTTPError
 
+from rest_framework.authtoken.models import Token
+
+class TokenSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Token
+        fields = ('key', 'user')
+
 class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
     username = serializers.CharField(
