@@ -9,11 +9,13 @@ The front-end repository can be found here: https://github.com/hajduboti/KEARoom
 
 The landing page is a login screen where the user can log in if he or she has
 a KEA email address. If not, an account may be created by clicking 'Create Account'
+
 --------------------------
 ![alt text](img/0.2.PNG)
 
 The account creation page looks like above and requires an email address with a kea domain(@stud.kea.dk) and
 takes a password, minimum 8 characters, and the users First and Last Name
+
 --------------------------
 ![alt text](img/1.PNG)
 
@@ -21,6 +23,7 @@ If the user logs in successfully, they are greeted to a screen showing various
 KEA campuses. For the moment we have only implemented the functionality for KEA's campus
 at Guldbergsgade 29E. You must enter a date and a start/end time for the booking.
 The time must be between 08.00 and 22.00, the hours of operation at KEA.
+
 --------------------------
 ![alt text](img/3.PNG)
 
